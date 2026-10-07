@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GW Williams Neuroscience Club</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            950: '#070b19',
+                            900: '#0b1329',
+                            800: '#111827',
+                            700: '#1e293b',
+                            600: '#334155'
+                        },
+                        cyan: {
+                            300: '#67e8f9',
+                            400: '#38bdf8',
+                            500: '#06b6d4',
+                            600: '#0891b2'
+                        },
+                        synapse: {
+                            purple: '#a855f7',
+                            pink: '#ec4899',
+                            glow: '#00f2fe'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Glassmorphism & Neural Effects */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .glass-card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .glass-card-hover:hover {
+            transform: translateY(-4px);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(56, 189, 248, 0.25);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-cyan {
+            background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .synapse-border {
+            position: relative;
+        }
+        .synapse-border::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 5%;
+            width: 90%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(56,189,248,0.5), transparent);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #070b19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #38bdf8;
+        }
+
+        /* Animated Pulse for Badges */
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        .animate-pulse-slow {
+            animation: pulse-glow 3s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-navy-950 text-slate-100 font-sans antialiased selection:bg-cyan-500 selection:text-navy-950 min-h-screen flex flex-col justify-between overflow-x-hidden">
+
+    <!-- NAVIGATION BAR -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-card bg-navy-950/80 border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Brand Logo -->
+                <a href="#home" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-purple-600 p-0.5 shadow-lg shadow-cyan-500/20 group-hover:shadow-cyan-500/40 transition-all">
+                        <div class="w-full h-full bg-navy-950 rounded-[10px] flex items-center justify-center">
+                            <!-- Brain / Synapse Icon SVG -->
+                            <svg class="w-6 h-6 text-cyan-400 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 13.5M14.25 3.104v5.714c0 .597.237 1.17.659 1.591L19 13.5M4.5 19.5h15a2.25 2.25 0 002.25-2.25V15a2.25 2.25 0 00-2.25-2.25H4.5A2.25 2.25 0 002.25 15v2.25A2.25 2.25 0 004.5 19.5z" />
+                                <circle cx="12" cy="7" r="2.5" class="fill-cyan-400/20 stroke-cyan-400" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="font-bold text-lg tracking-tight text-white block">GW Williams</span>
+                        <span class="text-xs font-semibold text-cyan-400 tracking-wider uppercase block">Neuroscience Club</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav Links -->
+                <nav class="hidden lg:flex items-center gap-1 xl:gap-2">
+                    <a href="#home" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 rounded-lg transition-colors">Home</a>
+                    <a href="#about" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 rounded-lg transition-colors">About Us</a>
+                    <a href="#executives" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 rounded-lg transition-colors">Exec Team</a>
+                    <a href="#setup" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 rounded-lg transition-colors">Club Setup</a>
+                    <a href="#competitions" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 rounded-lg transition-colors">Competitions</a>
+                    <a href="#resources" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 rounded-lg transition-colors">Resources</a>
+                    <a href="#contact" class="px-3 py-2 text-sm font-medium text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 rounded-lg transition-colors">Contact</a>
+                </nav>
+
+                <!-- Actions Right -->
+                <div class="hidden lg:flex items-center gap-3">
+                    <button onclick="openJoinModal()" class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-semibold text-white rounded-xl group bg-gradient-to-br from-cyan-500 to-purple-600 group-hover:from-cyan-500 group-hover:to-purple-600 hover:shadow-lg hover:shadow-cyan-500/25 transition-all">
+                        <span class="relative px-4 py-2 transition-all ease-in duration-75 bg-navy-950 rounded-[10px] group-hover:bg-opacity-0">
+                            Join the Club
+                        </span>
+                    </button>
+                    <button onclick="toggleDeployDrawer()" title="GitHub Pages Code Split Helper" class="p-2 text-slate-400 hover:text-cyan-400 hover:bg-slate-800 rounded-lg transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    </button>
+                </div>
+
+                <!-- Mobile Hamburger Toggle Button -->
+                <div class="flex lg:hidden items-center gap-2">
+                    <button onclick="toggleDeployDrawer()" title="GitHub Pages Code Split Helper" class="p-2 text-slate-400 hover:text-cyan-400 hover:bg-slate-800 rounded-lg">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    </button>
+                    <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="p-2 text-slate-300 hover:text-white focus:outline-none rounded-lg hover:bg-slate-800">
+                        <svg class="w-6 h-6" id="menuIconOpen" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="w-6 h-6 hidden" id="menuIconClose" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-navy-900/95 border-b border-slate-800 px-4 pt-2 pb-6 space-y-2">
+            <a href="#home" onclick="toggleMobileMenu()" class="block px-3 py-2 text-base font-medium text-slate-200 hover:text-cyan-400 hover:bg-slate-800/60 rounded-lg">Home</a>
+            <a href="#about" onclick="toggleMobileMenu()" class="block px-3 py-2 text-base font-medium text-slate-200 hover:text-cyan-400 hover:bg-slate-800/60 rounded-lg">About Us</a>
+            <a href="#executives" onclick="toggleMobileMenu()" class="block px-3 py-2 text-base font-medium text-slate-200 hover:text-cyan-400 hover:bg-slate-800/60 rounded-lg">Executive Team</a>
+            <a href="#setup" onclick="toggleMobileMenu()" class="block px-3 py-2 text-base font-medium text-slate-200 hover:text-cyan-400 hover:bg-slate-800/60 rounded-lg">Club Setup</a>
+            <a href="#competitions" onclick="toggleMobileMenu()" class="block px-3 py-2 text-base font-medium text-slate-200 hover:text-cyan-400 hover:bg-slate-800/60 rounded-lg">Competitions & Events</a>
+            <a href="#resources" onclick="toggleMobileMenu()" class="block px-3 py-2 text-base font-medium text-slate-200 hover:text-cyan-400 hover:bg-slate-800/60 rounded-lg">Resources</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block px-3 py-2 text-base font-medium text-slate-200 hover:text-cyan-400 hover:bg-slate-800/60 rounded-lg">Contact</a>
+            <div class="pt-2">
+                <button onclick="openJoinModal(); toggleMobileMenu();" class="w-full py-3 bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-semibold rounded-xl text-center shadow-lg shadow-cyan-500/20">
+                    Join the Club
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow pt-20">
+        <!-- HERO SECTION -->
+        <section id="home" class="relative min-h-[90vh] flex items-center justify-center py-16 overflow-hidden">
+            <!-- Canvas Canvas background -->
+            <canvas id="synapseCanvas" class="absolute inset-0 w-full h-full pointer-events-auto z-0 opacity-60"></canvas>
+            
+            <!-- Radial gradient overlay for smooth contrast -->
+            <div class="absolute inset-0 bg-radial-gradient from-transparent via-navy-950/70 to-navy-950 pointer-events-none z-10"></div>
+
+            <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-8">
+                <!-- Badge -->
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card border-cyan-500/30 text-cyan-300 text-xs sm:text-sm font-semibold mb-6 shadow-inner animate-pulse-slow">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                    Official School Club &bull; Dr. G.W. Williams Secondary School
+                </div>
+
+                <!-- Main Title -->
+                <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white mb-4">
+                    GW Williams <br class="hidden sm:inline" />
+                    <span class="text-gradient">Neuroscience Club</span>
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="text-xl sm:text-2xl font-semibold text-slate-300 mb-6 max-w-3xl mx-auto">
+                    Explore the Brain. Discover Science. Shape the Future.
+                </p>
+
+                <!-- Intro Description -->
+                <p class="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+                    Connecting students at Dr. G.W. Williams SS to the cutting edge of human cognition, neurology, medical research, and competitive science. No prior experience required—just curiosity!
+                </p>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap items-center justify-center gap-4 mb-16">
+                    <a href="#about" class="px-7 py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold rounded-xl shadow-lg shadow-cyan-500/25 transition-all hover:scale-105">
+                        Learn About Us
+                    </a>
+                    <a href="#competitions" class="px-7 py-3.5 glass-card hover:bg-slate-800 text-slate-200 hover:text-white font-bold rounded-xl border border-slate-700 hover:border-cyan-400/50 transition-all hover:scale-105">
+                        Competitions & Events
+                    </a>
+                    <button onclick="openJoinModal()" class="px-7 py-3.5 bg-purple-600/30 hover:bg-purple-600/50 text-purple-200 border border-purple-500/40 hover:border-purple-400 font-bold rounded-xl transition-all hover:scale-105">
+                        Join the Club
+                    </button>
+                </div>
+
+                <!-- 4 Info Cards Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left max-w-6xl mx-auto">
+                    <!-- Card 1 -->
+                    <div class="glass-card glass-card-hover p-6 rounded-2xl relative overflow-hidden group">
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 mb-4 group-hover:bg-cyan-500 group-hover:text-navy-950 transition-all">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Explore Neuroscience</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed">Learn about the brain, nervous system, cognitive science, and modern neurological discoveries.</p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="glass-card glass-card-hover p-6 rounded-2xl relative overflow-hidden group">
+                        <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-4 group-hover:bg-purple-500 group-hover:text-white transition-all">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Compete</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed">Participate in prestigious national & international neuroscience, biology, and science fairs.</p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="glass-card glass-card-hover p-6 rounded-2xl relative overflow-hidden group">
+                        <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-4 group-hover:bg-blue-500 group-hover:text-white transition-all">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Learn Together</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed">Study, collaborate, and discuss fascinating brain topics with peers across Grades 9–12.</p>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="glass-card glass-card-hover p-6 rounded-2xl relative overflow-hidden group">
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-4 group-hover:bg-emerald-500 group-hover:text-navy-950 transition-all">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Build Your Future</h3>
+                        <p class="text-sm text-slate-400 leading-relaxed">Develop analytical skills, research experience, and credentials for university and medical pathways.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT US SECTION -->
+        <section id="about" class="py-20 relative bg-navy-900/40 border-t border-b border-slate-800/80">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Section Header -->
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-cyan-400 mb-2">Who We Are</h2>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-white">About the GW Williams Neuroscience Club</p>
+                    <div class="w-16 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 mx-auto rounded-full mt-4"></div>
+                </div>
+
+                <!-- Two Column Modern Layout -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center mb-16">
+                    <!-- Column 1: Story -->
+                    <div class="lg:col-span-6 space-y-6">
+                        <div class="glass-card p-8 rounded-3xl border-slate-800">
+                            <h3 class="text-2xl font-bold text-white mb-4">Empowering Student Scientists</h3>
+                            <p class="text-slate-300 leading-relaxed mb-4">
+                                The <strong class="text-cyan-300">GW Williams Neuroscience Club</strong> is a student-led initiative at Dr. G.W. Williams Secondary School. Designed for students enthusiastic about neuroscience, biology, medicine, psychology, and interdisciplinary research.
+                            </p>
+                            <p class="text-slate-400 leading-relaxed">
+                                Our goal is to make complex scientific concepts accessible and exciting. Whether you aspire to attend medical school, pursue laboratory research, or simply want to understand how your brain processes memories and emotions, our community provides the mentorship and opportunities you need.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Column 2: Quick Highlights -->
+                    <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="glass-card p-5 rounded-2xl border-slate-800 flex items-start gap-4">
+                            <div class="p-3 bg-cyan-500/10 rounded-xl text-cyan-400">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">Student-Led</h4>
+                                <p class="text-xs text-slate-400">Driven by passion, peer mentorship, and collaborative curiosity.</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-5 rounded-2xl border-slate-800 flex items-start gap-4">
+                            <div class="p-3 bg-purple-500/10 rounded-xl text-purple-400">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">Hands-On STEM</h4>
+                                <p class="text-xs text-slate-400">Interactive study tools, case studies, and lab simulations.</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-5 rounded-2xl border-slate-800 flex items-start gap-4">
+                            <div class="p-3 bg-blue-500/10 rounded-xl text-blue-400">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">Competition Ready</h4>
+                                <p class="text-xs text-slate-400">Dedicated prep for Brain Bee, CBO, UTSRI, and CWSF.</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-5 rounded-2xl border-slate-800 flex items-start gap-4">
+                            <div class="p-3 bg-emerald-500/10 rounded-xl text-emerald-400">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white mb-1">Invasive Curiosity</h4>
+                                <p class="text-xs text-slate-400">Open to all students from Grade 9 to Grade 12.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8 Core Pillars Grid -->
+                <div class="mt-12">
+                    <h3 class="text-xl font-bold text-white text-center mb-8">Our 8 Club Activity Pillars</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="p-4 rounded-xl glass-card border-slate-800/80 flex items-center gap-3">
+                            <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+                            <span class="text-sm font-semibold text-slate-200">Educational Discussions</span>
+                        </div>
+                        <div class="p-4 rounded-xl glass-card border-slate-800/80 flex items-center gap-3">
+                            <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+                            <span class="text-sm font-semibold text-slate-200">Study Sessions</span>
+                        </div>
+                        <div class="p-4 rounded-xl glass-card border-slate-800/80 flex items-center gap-3">
+                            <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+                            <span class="text-sm font-semibold text-slate-200">Neuroscience Activities</span>
+                        </div>
+                        <div class="p-4 rounded-xl glass-card border-slate-800/80 flex items-center gap-3">
+                            <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+                            <span class="text-sm font-semibold text-slate-200">Competition Preparation</span>
+                        </div>
+                        <div class="p-4 rounded-xl glass-card border-slate-800/80 flex items-center gap-3">
+                            <span class="w-2.5 h-2.5 rounded-full bg-purple-400"></span>
+                            <span class="text-sm font-semibold text-slate-200">Science-Related Events</span>
+                        </div>
+                        <div class="p-4 rounded-xl glass-card border-slate-800/80 flex items-center gap-3">
+                            <span class="w-2.5 h-2.5 rounded-full bg-purple-400"></span>
+                            <span class="text-sm font-semibold text-slate-200">Research Opportunities</span>
+                        </div>
+                        <div class="p-4 rounded-xl glass-card border-slate-800/80 flex items-center gap-3">
+                            <span class="w-2.5 h-2.5 rounded-full bg-purple-400"></span>
+                            <span class="text-sm font-semibold text-slate-200">Collaborative Projects</span>
+                        </div>
+                        <div class="p-4 rounded-xl glass-card border-slate-800/80 flex items-center gap-3">
+                            <span class="w-2.5 h-2.5 rounded-full bg-purple-400"></span>
+                            <span class="text-sm font-semibold text-slate-200">Medicine & Career Insights</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXECUTIVE TEAM SECTION -->
+        <section id="executives" class="py-20 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Section Title -->
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-cyan-400 mb-2">Leadership</h2>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-white">Executive Team</p>
+                    <p class="text-slate-400 text-sm mt-2">Meet the dedicated student team organizing GW Williams Neuroscience activities.</p>
+                    <div class="w-16 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 mx-auto rounded-full mt-4"></div>
+                </div>
+
+                <!-- Current Executives Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                    <!-- President: Jireh -->
+                    <div class="glass-card glass-card-hover p-6 rounded-2xl text-center relative border-cyan-500/30">
+                        <div class="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 p-0.5 shadow-lg shadow-cyan-500/20">
+                            <div class="w-full h-full bg-navy-900 rounded-[14px] flex items-center justify-center text-2xl font-bold text-cyan-300">
+                                J
+                            </div>
+                        </div>
+                        <span class="inline-block px-3 py-1 bg-cyan-500/10 text-cyan-400 text-xs font-bold rounded-full mb-2 border border-cyan-500/20">
+                            President
+                        </span>
+                        <h3 class="text-xl font-bold text-white mb-1">Jireh</h3>
+                        <p class="text-xs text-slate-400">Leads overall club strategy, competition alignment, and meeting agendas.</p>
+                    </div>
+
+                    <!-- Vice President: Natalie -->
+                    <div class="glass-card glass-card-hover p-6 rounded-2xl text-center relative">
+                        <div class="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-tr from-blue-500 to-purple-600 p-0.5">
+                            <div class="w-full h-full bg-navy-900 rounded-[14px] flex items-center justify-center text-2xl font-bold text-blue-300">
+                                N
+                            </div>
+                        </div>
+                        <span class="inline-block px-3 py-1 bg-blue-500/10 text-blue-400 text-xs font-bold rounded-full mb-2 border border-blue-500/20">
+                            Vice President & Socials
+                        </span>
+                        <h3 class="text-xl font-bold text-white mb-1">Natalie</h3>
+                        <p class="text-xs text-slate-400">Oversees club operations and manages official social media presence.</p>
+                    </div>
+
+                    <!-- Vice President & Secretary: Crystal -->
+                    <div class="glass-card glass-card-hover p-6 rounded-2xl text-center relative">
+                        <div class="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-tr from-purple-500 to-pink-600 p-0.5">
+                            <div class="w-full h-full bg-navy-900 rounded-[14px] flex items-center justify-center text-2xl font-bold text-purple-300">
+                                C
+                            </div>
+                        </div>
+                        <span class="inline-block px-3 py-1 bg-purple-500/10 text-purple-400 text-xs font-bold rounded-full mb-2 border border-purple-500/20">
+                            VP & Secretary
+                        </span>
+                        <h3 class="text-xl font-bold text-white mb-1">Crystal</h3>
+                        <p class="text-xs text-slate-400">Manages club records, documentation, and co-directs executive planning.</p>
+                    </div>
+
+                    <!-- Event Coordinator: Abhiraj -->
+                    <div class="glass-card glass-card-hover p-6 rounded-2xl text-center relative">
+                        <div class="w-20 h-20 mx-auto mb-4 rounded-2xl bg-gradient-to-tr from-emerald-500 to-cyan-600 p-0.5">
+                            <div class="w-full h-full bg-navy-900 rounded-[14px] flex items-center justify-center text-2xl font-bold text-emerald-300">
+                                A
+                            </div>
+                        </div>
+                        <span class="inline-block px-3 py-1 bg-emerald-500/10 text-emerald-400 text-xs font-bold rounded-full mb-2 border border-emerald-500/20">
+                            Event Coordinator
+                        </span>
+                        <h3 class="text-xl font-bold text-white mb-1">Abhiraj</h3>
+                        <p class="text-xs text-slate-400">Coordinates study workshops, competition logistics, and club web assets.</p>
+                    </div>
+                </div>
+
+                <!-- Open Position Placeholders -->
+                <div class="mt-8 pt-8 border-t border-slate-800">
+                    <h3 class="text-lg font-bold text-slate-300 mb-6 text-center">Open Positions / Roles Needed</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Role 1 -->
+                        <div class="p-5 rounded-2xl glass-card border-dashed border-slate-700 hover:border-cyan-500/50 flex flex-col justify-between">
+                            <div>
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                                    Advisor Spot
+                                </span>
+                                <h4 class="text-base font-bold text-white mt-2 mb-1">Teacher Supervisor / Advisor</h4>
+                                <p class="text-xs text-slate-400">Faculty member to support club sanctioning, classroom space, and CBO registrations.</p>
+                            </div>
+                            <button onclick="openJoinModal('Teacher Supervisor')" class="mt-4 text-xs font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1">
+                                Express Interest &rarr;
+                            </button>
+                        </div>
+
+                        <!-- Role 2 -->
+                        <div class="p-5 rounded-2xl glass-card border-dashed border-slate-700 hover:border-cyan-500/50 flex flex-col justify-between">
+                            <div>
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                                    Student Leadership
+                                </span>
+                                <h4 class="text-base font-bold text-white mt-2 mb-1">Education Chair</h4>
+                                <p class="text-xs text-slate-400">Helps formulate lesson decks, Brain Bee study guides, and biology review sessions.</p>
+                            </div>
+                            <button onclick="openJoinModal('Education Chair')" class="mt-4 text-xs font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1">
+                                Apply Now &rarr;
+                            </button>
+                        </div>
+
+                        <!-- Role 3 -->
+                        <div class="p-5 rounded-2xl glass-card border-dashed border-slate-700 hover:border-cyan-500/50 flex flex-col justify-between">
+                            <div>
+                                <span class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                                    Student Leadership
+                                </span>
+                                <h4 class="text-base font-bold text-white mt-2 mb-1">Communications Chair</h4>
+                                <p class="text-xs text-slate-400">Assists with school announcements, flyer design, and internal member updates.</p>
+                            </div>
+                            <button onclick="openJoinModal('Communications Chair')" class="mt-4 text-xs font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1">
+                                Apply Now &rarr;
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Privacy Disclaimer Notice -->
+                <p class="text-xs text-slate-500 text-center mt-8">
+                    &bull; Student executive personal email addresses are kept private in accordance with school privacy guidelines. Please use the contact form for inquiries.
+                </p>
+            </div>
+        </section>
+
+        <!-- CLUB SETUP / WHAT WE NEED SECTION -->
+        <section id="setup" class="py-20 relative bg-navy-900/40 border-t border-b border-slate-800">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Section Title -->
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-cyan-400 mb-2">Establishment Progress</h2>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-white">Club Setup Checklist</p>
+                    <p class="text-slate-400 text-sm mt-2">Track our official launch progress as we prepare for student meetings.</p>
+                    <div class="w-16 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 mx-auto rounded-full mt-4"></div>
+                </div>
+
+                <!-- Progress Bar Visualizer -->
+                <div class="glass-card p-6 sm:p-8 rounded-3xl border-slate-800 mb-10">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-sm font-bold text-white flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-cyan-400 animate-pulse"></span>
+                            Launch Preparedness
+                        </span>
+                        <span class="text-lg font-extrabold text-cyan-400" id="progressPercentage">45%</span>
+                    </div>
+                    <div class="w-full h-4 bg-slate-800 rounded-full overflow-hidden p-0.5 border border-slate-700">
+                        <div class="h-full bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 rounded-full transition-all duration-1000 shadow-lg shadow-cyan-500/50" style="width: 45%"></div>
+                    </div>
+                </div>
+
+                <!-- Completed vs Needed Split Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Completed Column -->
+                    <div class="glass-card p-6 rounded-2xl border-emerald-500/20 bg-emerald-950/10">
+                        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-800">
+                            <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+                                ✓
+                            </div>
+                            <h3 class="text-lg font-bold text-white">Completed Milestones</h3>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3 text-sm text-slate-300">
+                                <span class="text-emerald-400 font-bold">✓</span>
+                                <span><strong>President:</strong> Jireh</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-slate-300">
+                                <span class="text-emerald-400 font-bold">✓</span>
+                                <span><strong>Vice Presidents:</strong> Natalie & Crystal</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-slate-300">
+                                <span class="text-emerald-400 font-bold">✓</span>
+                                <span><strong>Event Coordinator:</strong> Abhiraj</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-slate-300">
+                                <span class="text-emerald-400 font-bold">✓</span>
+                                <span><strong>Secretary:</strong> Crystal</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-slate-300">
+                                <span class="text-emerald-400 font-bold">✓</span>
+                                <span><strong>Instagram Account:</strong> Created & managed by Natalie</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Still Needed Column -->
+                    <div class="glass-card p-6 rounded-2xl border-amber-500/20 bg-amber-950/10">
+                        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-800">
+                            <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">
+                                ○
+                            </div>
+                            <h3 class="text-lg font-bold text-white">Still Needed / In Progress</h3>
+                        </div>
+                        <ul class="space-y-3">
+                            <li class="flex items-start gap-3 text-sm text-slate-300">
+                                <span class="text-amber-400 font-bold">○</span>
+                                <span>Teacher Supervisor / Advisor</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-slate-300">
+                                <span class="text-amber-400 font-bold">○</span>
+                                <span>Education Chair</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-slate-300">
+                                <span class="text-amber-400 font-bold">○</span>
+                                <span>Communications Chair</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-slate-300">
+                                <span class="text-amber-400 font-bold">○</span>
+                                <span>Designated Meeting Space (Classroom)</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-slate-300">
+                                <span class="text-amber-400 font-bold">○</span>
+                                <span>Official Club Proposal Form Submission</span>
+                            </li>
+                            <li class="flex items-start gap-3 text-sm text-slate-300">
+                                <span class="text-amber-400 font-bold">○</span>
+                                <span>Curriculum & Study Materials Finalization</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMPETITIONS & EVENTS SECTION -->
+        <section id="competitions" class="py-20 relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Section Title -->
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-cyan-400 mb-2">Academic Challenges</h2>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-white">Competitions & Events</p>
+                    <p class="text-slate-400 text-sm mt-2">Explore major regional, national, and global STEM competitions for high school students.</p>
+                    <div class="w-16 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 mx-auto rounded-full mt-4"></div>
+                </div>
+
+                <!-- Search & Category Filters -->
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-10">
+                    <!-- Filter Buttons -->
+                    <div class="flex flex-wrap items-center gap-2 w-full md:w-auto" id="filterBtnContainer">
+                        <button onclick="filterCompetitions('all')" class="comp-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-cyan-500 text-navy-950 transition-all shadow-md">
+                            All Competitions
+                        </button>
+                        <button onclick="filterCompetitions('neuro')" class="comp-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-white transition-all">
+                            Neuroscience
+                        </button>
+                        <button onclick="filterCompetitions('bio')" class="comp-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-white transition-all">
+                            Biology
+                        </button>
+                        <button onclick="filterCompetitions('sciencefair')" class="comp-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-white transition-all">
+                            Science Fairs
+                        </button>
+                        <button onclick="filterCompetitions('essay')" class="comp-filter-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-300 hover:text-white transition-all">
+                            Research & Essays
+                        </button>
+                    </div>
+
+                    <!-- Search Input Box -->
+                    <div class="relative w-full md:w-72">
+                        <input type="text" id="competitionSearch" onkeyup="searchCompetitions()" placeholder="Search competitions..." class="w-full px-4 py-2.5 pl-10 rounded-xl bg-slate-900 border border-slate-800 text-slate-200 text-sm focus:outline-none focus:border-cyan-400 transition-all" />
+                        <svg class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </div>
+                </div>
+
+                <!-- Competition Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="competitionsGrid">
+
+                    <!-- 1. Canadian National Brain Bee -->
+                    <div class="comp-card glass-card glass-card-hover p-6 rounded-2xl flex flex-col justify-between border-slate-800" data-category="neuro">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">Neuroscience</span>
+                                <span class="text-xs text-slate-400">Annual Contest</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mb-2">Canadian National Brain Bee</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                                The premier neuroscience competition testing high school students on neuroanatomy, brain function, memory, neurological diseases, and clinical diagnoses.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                            <a href="https://brainbee.ca" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 text-xs font-bold transition-all border border-cyan-500/30">
+                                Official Website ↗
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 2. Youth Science Canada Regional & CWSF -->
+                    <div class="comp-card glass-card glass-card-hover p-6 rounded-2xl flex flex-col justify-between border-slate-800" data-category="sciencefair">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-purple-500/10 text-purple-400 border border-purple-500/20">Science Fair</span>
+                                <span class="text-xs text-slate-400">Regional / National</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mb-2">Youth Science Canada & CWSF</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                                Showcase original STEM and biomedical research projects. Qualify through regional science fairs to compete nationally at the Canada-Wide Science Fair.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                            <a href="https://youthscience.ca" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 text-xs font-bold transition-all border border-cyan-500/30">
+                                Official Website ↗
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 3. U of T National Biology Competition (NBC) -->
+                    <div class="comp-card glass-card glass-card-hover p-6 rounded-2xl flex flex-col justify-between border-slate-800 relative" data-category="bio">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20">Biology</span>
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">GW Williams Participated</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mb-2">U of T National Biology Competition</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-3">
+                                Major national high school competition organized by the University of Toronto testing biological concepts from genetics and neurobiology to ecology.
+                            </p>
+                            <div class="p-2.5 rounded-lg bg-emerald-950/30 border border-emerald-500/30 text-[11px] text-emerald-300 font-medium mb-4">
+                                ★ <em>GW Williams participated in this competition last year!</em>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                            <a href="https://biocomp.utoronto.ca" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 text-xs font-bold transition-all border border-cyan-500/30">
+                                Official Website ↗
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 4. Canadian Biology Olympiad (CBO) -->
+                    <div class="comp-card glass-card glass-card-hover p-6 rounded-2xl flex flex-col justify-between border-slate-800" data-category="bio">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-blue-500/10 text-blue-400 border border-blue-500/20">Biology</span>
+                                <span class="text-xs text-amber-400 font-bold">$25 Fee &bull; April</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mb-2">Canadian Biology Olympiad (CBO)</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-3">
+                                Advanced nationwide biology exam. Winners qualify to represent Canada at the International Biology Olympiad. Requires teacher registration.
+                            </p>
+                            <div class="text-[11px] text-slate-400 space-y-1 mb-4">
+                                <p>&bull; <strong>Timing:</strong> Takes place in April</p>
+                                <p>&bull; <strong>Registration:</strong> $25 fee per student (Teacher registration required)</p>
+                            </div>
+                        </div>
+                        <div class="pt-4 border-t border-slate-800/80 flex flex-wrap items-center gap-2">
+                            <a href="https://canadianbiologyolympiad.ca" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 text-xs font-bold transition-all border border-cyan-500/30">
+                                Website ↗
+                            </a>
+                            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeL5eVGHe6qq2L-ybTwuPwRYIPU2qQLDud0ge9qAFY6dktHKA/viewform" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-purple-600/30 hover:bg-purple-600/50 text-purple-200 text-xs font-bold transition-all border border-purple-500/40">
+                                Reg Form ↗
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 5. International Science Bee (Canada) -->
+                    <div class="comp-card glass-card glass-card-hover p-6 rounded-2xl flex flex-col justify-between border-slate-800" data-category="sciencefair">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-purple-500/10 text-purple-400 border border-purple-500/20">Science Bee</span>
+                                <span class="text-xs text-slate-400">Buzzer Contest</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mb-2">International Science Bee (Canada)</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                                Fast-paced buzzer-based science competition covering broad topics across human biology, physics, neuroscience, chemistry, and history of science.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                            <a href="https://www.iacompetitions.com/sciencebee" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 text-xs font-bold transition-all border border-cyan-500/30">
+                                Official Website ↗
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 6. U of T Student Research Initiative (UTSRI) Case Competition -->
+                    <div class="comp-card glass-card glass-card-hover p-6 rounded-2xl flex flex-col justify-between border-slate-800" data-category="essay">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-purple-500/10 text-purple-400 border border-purple-500/20">Research Case</span>
+                                <span class="text-xs text-amber-400 font-bold">$45 Fee</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mb-2">UTSRI High School Case Competition</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-3">
+                                University of Toronto Student Research Initiative competition where teams analyze complex scientific case studies and present proposal solutions.
+                            </p>
+                            <p class="text-[11px] text-slate-400 mb-4">&bull; <strong>Registration:</strong> $45 entry fee</p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-800/80 flex flex-wrap items-center gap-2">
+                            <a href="https://utsri.ca" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 text-xs font-bold transition-all border border-cyan-500/30">
+                                Website ↗
+                            </a>
+                            <a href="https://utsri.ca/hscc/reg/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-purple-600/30 hover:bg-purple-600/50 text-purple-200 text-xs font-bold transition-all border border-purple-500/40">
+                                Registration Link ↗
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 7. International Neuroethics Essay Contest -->
+                    <div class="comp-card glass-card glass-card-hover p-6 rounded-2xl flex flex-col justify-between border-slate-800" data-category="essay">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-pink-500/10 text-pink-400 border border-pink-500/20">Optional / Essay</span>
+                                <span class="text-xs text-slate-400">Global Contest</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mb-2">Neuroethics Essay Contest</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                                Explore ethical, legal, and societal implications of neuroscience advancements (e.g., AI neuro-technologies, memory alteration, and brain privacy).
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                            <a href="https://www.neuroethicssociety.org/essay-contest" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 text-xs font-bold transition-all border border-cyan-500/30">
+                                Official Website ↗
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 8. Brain Awareness Video Contest -->
+                    <div class="comp-card glass-card glass-card-hover p-6 rounded-2xl flex flex-col justify-between border-slate-800" data-category="neuro">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">Video & Creative</span>
+                                <span class="text-xs text-slate-400">BrainFacts.org</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mb-2">Brain Awareness Video Contest</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                                Produce a short, engaging 5-minute educational video explaining a complex neuroscience concept or brain function for the general public.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                            <a href="https://www.brainfacts.org/brain-awareness-video-contest" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 text-xs font-bold transition-all border border-cyan-500/30">
+                                Official Website ↗
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 9. York Region Science Fair (YRSTF / CWSF Regional) -->
+                    <div class="comp-card glass-card glass-card-hover p-6 rounded-2xl flex flex-col justify-between border-slate-800" data-category="sciencefair">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-purple-500/10 text-purple-400 border border-purple-500/20">Regional STEM</span>
+                                <span class="text-xs text-slate-400">York Region</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-white mb-2">York Region Science Fair (YRSTF)</h3>
+                            <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                                Regional science fair for students across York Region (YRDSB). Qualify here to advance directly to the Canada-Wide Science Fair.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                            <a href="https://yrstf.info.yorku.ca/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 text-xs font-bold transition-all border border-cyan-500/30">
+                                Official Website ↗
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- RESOURCES SECTION -->
+        <section id="resources" class="py-20 relative bg-navy-900/40 border-t border-b border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Section Title -->
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-cyan-400 mb-2">Learning Hub</h2>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-white">Student Resources</p>
+                    <p class="text-slate-400 text-sm mt-2">Curated study guides, neuro-anatomy review decks, and competition prep tools.</p>
+                    <div class="w-16 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 mx-auto rounded-full mt-4"></div>
+                </div>
+
+                <!-- 4 Category Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Resource 1: Study Materials -->
+                    <div class="glass-card p-6 rounded-2xl border-slate-800">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center font-bold">
+                                    01
+                                </div>
+                                <h3 class="text-lg font-bold text-white">Study Materials</h3>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                                In Development
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-300 mb-4">
+                            Detailed neuroscience notes, brain anatomical diagrams, neurotransmitter review sheets, and practice quiz sets currently being formulated by executive team.
+                        </p>
+                        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400 flex items-center justify-between">
+                            <span>Brain Facts & Anatomy Summary PDF</span>
+                            <span class="text-slate-500 italic">Coming Soon</span>
+                        </div>
+                    </div>
+
+                    <!-- Resource 2: Brain & Neuroscience -->
+                    <div class="glass-card p-6 rounded-2xl border-slate-800">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold">
+                                    02
+                                </div>
+                                <h3 class="text-lg font-bold text-white">Brain & Neuroscience Tools</h3>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                                Recommended
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-300 mb-4">
+                            Interactive 3D brain atlases, open access neuroscience journals, and video explanations of action potentials and synaptic transmission.
+                        </p>
+                        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400 flex items-center justify-between">
+                            <span>Interactive 3D Brain Atlas Guide</span>
+                            <span class="text-cyan-400 font-semibold">Curated External</span>
+                        </div>
+                    </div>
+
+                    <!-- Resource 3: Competition Prep -->
+                    <div class="glass-card p-6 rounded-2xl border-slate-800">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold">
+                                    03
+                                </div>
+                                <h3 class="text-lg font-bold text-white">Competition Preparation</h3>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                                In Development
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-300 mb-4">
+                            Brain Bee past question banks, CBO past olympiad papers, and science fair proposal templates for high school researchers.
+                        </p>
+                        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400 flex items-center justify-between">
+                            <span>Brain Bee Question Bank Deck</span>
+                            <span class="text-slate-500 italic">Coming Soon</span>
+                        </div>
+                    </div>
+
+                    <!-- Resource 4: Research & Careers -->
+                    <div class="glass-card p-6 rounded-2xl border-slate-800">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">
+                                    04
+                                </div>
+                                <h3 class="text-lg font-bold text-white">Research & Medical Pathways</h3>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                General Info
+                            </span>
+                        </div>
+                        <p class="text-xs text-slate-300 mb-4">
+                            Guides on finding university summer research programs, reaching out to professors, and understanding undergraduate pre-med pathways in Ontario.
+                        </p>
+                        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800 text-xs text-slate-400 flex items-center justify-between">
+                            <span>High School Research Pathway Guide</span>
+                            <span class="text-slate-500 italic">In Prep</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- JOIN THE CLUB SECTION -->
+        <section id="join" class="py-20 relative">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="glass-card p-8 sm:p-12 rounded-3xl text-center relative overflow-hidden border-cyan-500/30 shadow-2xl">
+                    <!-- Background Synapse Glow -->
+                    <div class="absolute -top-24 -right-24 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                    <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                    <div class="relative z-10">
+                        <span class="inline-block px-3 py-1 bg-cyan-500/10 text-cyan-400 text-xs font-bold rounded-full mb-4 border border-cyan-500/20">
+                            Welcome Grades 9–12
+                        </span>
+                        <h2 class="text-3xl sm:text-5xl font-extrabold text-white mb-4">
+                            Interested in Neuroscience?
+                        </h2>
+                        <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto mb-8 leading-relaxed">
+                            Whether you are fascinated by mind, brain biology, neurology, medicine, psychology, or science competitions, you are invited to join our community at Dr. G.W. Williams SS.
+                        </p>
+
+                        <button onclick="openJoinModal()" class="px-8 py-4 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 text-navy-950 font-extrabold text-base rounded-2xl shadow-xl shadow-cyan-500/20 hover:scale-105 transition-all">
+                            Join the Club Form
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="py-20 relative bg-navy-900/40 border-t border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Section Title -->
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <h2 class="text-xs font-bold uppercase tracking-widest text-cyan-400 mb-2">Get In Touch</h2>
+                    <p class="text-3xl sm:text-4xl font-extrabold text-white">Contact & Socials</p>
+                    <p class="text-slate-400 text-sm mt-2">Have a question or want to collaborate with GW Williams Neuroscience Club?</p>
+                    <div class="w-16 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 mx-auto rounded-full mt-4"></div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                    <!-- Info Column -->
+                    <div class="lg:col-span-5 space-y-6">
+                        <div class="glass-card p-6 rounded-2xl border-slate-800">
+                            <h3 class="text-lg font-bold text-white mb-2">GW Williams Neuroscience Club</h3>
+                            <p class="text-xs text-slate-400 mb-4">Dr. G.W. Williams Secondary School, Aurora, Ontario.</p>
+                            
+                            <div class="space-y-4 text-xs text-slate-300">
+                                <div class="flex items-center gap-3 p-3 bg-slate-900/60 rounded-xl border border-slate-800">
+                                    <div class="w-8 h-8 rounded-lg bg-pink-500/10 text-pink-400 flex items-center justify-center font-bold">
+                                        IG
+                                    </div>
+                                    <div>
+                                        <p class="font-bold text-white">Official Instagram</p>
+                                        <p class="text-slate-400">Managed by Natalie</p>
+                                    </div>
+                                    <span class="ml-auto text-cyan-400 font-semibold cursor-pointer" onclick="showToast('Instagram link placeholder. Official handle coming soon!')">Link &rarr;</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-6 rounded-2xl border-slate-800 bg-slate-900/40">
+                            <h4 class="text-sm font-bold text-cyan-400 mb-2">Privacy Assurance</h4>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Student privacy is strictly maintained. Member emails and personal information submitted through club forms are handled confidentially for internal club updates only.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Contact Form Column -->
+                    <div class="lg:col-span-7">
+                        <div class="glass-card p-8 rounded-3xl border-slate-800">
+                            <h3 class="text-xl font-bold text-white mb-6">Send an Inquiry</h3>
+                            <form id="contactForm" onsubmit="handleContactSubmit(event)" class="space-y-4">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-300 mb-1">Your Name *</label>
+                                        <input type="text" required placeholder="Full Name" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:outline-none focus:border-cyan-400" />
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-300 mb-1">Grade Level *</label>
+                                        <select required class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:outline-none focus:border-cyan-400">
+                                            <option value="">Select Grade</option>
+                                            <option value="9">Grade 9</option>
+                                            <option value="10">Grade 10</option>
+                                            <option value="11">Grade 11</option>
+                                            <option value="12">Grade 12</option>
+                                            <option value="staff">Teacher / Staff</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-300 mb-1">Email Address *</label>
+                                    <input type="email" required placeholder="student@gap.yrdsb.ca or personal email" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:outline-none focus:border-cyan-400" />
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-300 mb-1">Subject</label>
+                                    <input type="text" placeholder="General Inquiry, Brain Bee Prep, Membership, etc." class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:outline-none focus:border-cyan-400" />
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-300 mb-1">Message *</label>
+                                    <textarea required rows="4" placeholder="How can we help you?" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 text-sm focus:outline-none focus:border-cyan-400"></textarea>
+                                </div>
+                                <button type="submit" class="w-full py-3 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold rounded-xl shadow-lg shadow-cyan-500/20 transition-all">
+                                    Send Message
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-navy-950 border-t border-slate-800/80 py-10 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-4">
+            <p class="font-semibold text-slate-400 mb-1">GW Williams Secondary School Neuroscience Club</p>
+            <p>Designed for student scientists &bull; Aurora, Ontario</p>
+            <p class="mt-4 text-[11px] text-slate-600">&copy; GW Williams Neuroscience Club. Ready for deployment on GitHub Pages.</p>
+        </div>
+    </footer>
+
+    <!-- JOIN THE CLUB MODAL -->
+    <div id="joinModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-navy-950/80 backdrop-blur-md">
+        <div class="glass-card max-w-lg w-full p-6 sm:p-8 rounded-3xl border-slate-700 relative shadow-2xl">
+            <button onclick="closeJoinModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white p-2 text-xl font-bold">
+                &times;
+            </button>
+            <h3 class="text-2xl font-bold text-white mb-2" id="modalTitle">Join GW Williams Neuroscience</h3>
+            <p class="text-xs text-slate-300 mb-6">Complete this signup form to register your interest for upcoming meetings and study sessions.</p>
+
+            <form onsubmit="handleModalSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Full Name *</label>
+                    <input type="text" required placeholder="Your Name" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:outline-none focus:border-cyan-400" />
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Grade *</label>
+                        <select required class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:outline-none focus:border-cyan-400">
+                            <option value="9">Grade 9</option>
+                            <option value="10">Grade 10</option>
+                            <option value="11">Grade 11</option>
+                            <option value="12">Grade 12</option>
+                            <option value="staff">Teacher / Staff</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Role / Focus</label>
+                        <select id="modalRoleSelect" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:outline-none focus:border-cyan-400">
+                            <option value="General Member">General Member</option>
+                            <option value="Brain Bee Competitor">Brain Bee Prep</option>
+                            <option value="Biology Contests">Biology Olympiads</option>
+                            <option value="Education Chair">Education Chair</option>
+                            <option value="Communications Chair">Communications Chair</option>
+                            <option value="Teacher Supervisor">Teacher Supervisor</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Email Address *</label>
+                    <input type="email" required placeholder="student@gap.yrdsb.ca" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:outline-none focus:border-cyan-400" />
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">Areas of Interest</label>
+                    <textarea rows="2" placeholder="e.g. Brain Bee, Medical research, Psychology, Biology, etc." class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white text-sm focus:outline-none focus:border-cyan-400"></textarea>
+                </div>
+                <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-cyan-400 to-purple-600 text-navy-950 font-bold rounded-xl shadow-lg transition-all">
+                    Submit Registration
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- GITHUB PAGES DEPLOYMENT HELPER DRAWER -->
+    <div id="deployDrawer" class="fixed inset-y-0 right-0 z-50 w-full sm:w-96 glass-card bg-navy-950/95 border-l border-slate-800 transform translate-x-full transition-transform duration-300 ease-in-out p-6 overflow-y-auto">
+        <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
+            <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                <svg class="w-5 h-5 text-cyan-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                GitHub Pages Helper
+            </h3>
+            <button onclick="toggleDeployDrawer()" class="text-slate-400 hover:text-white p-1">
+                &times;
+            </button>
+        </div>
+
+        <div class="space-y-4 text-xs text-slate-300">
+            <p>How to publish this website live on <strong>AbhirajRaka/NeuroScience-Club</strong>:</p>
+
+            <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                <span class="font-bold text-cyan-400 block mb-1">Option A: Single File (Easiest)</span>
+                Save this file as <code>index.html</code> and upload it directly to your GitHub repo root.
+            </div>
+
+            <div class="p-3 bg-slate-900 rounded-xl border border-slate-800">
+                <span class="font-bold text-purple-400 block mb-1">Option B: Multi-File Project</span>
+                If you prefer separating into <code>style.css</code> and <code>script.js</code>:
+                <ol class="list-decimal pl-4 mt-1 space-y-1 text-slate-400">
+                    <li>Extract internal CSS styles to <code>style.css</code></li>
+                    <li>Extract JavaScript logic to <code>script.js</code></li>
+                    <li>Link both inside <code>index.html</code></li>
+                </ol>
+            </div>
+
+            <div class="pt-2">
+                <button onclick="copyFullHtmlCode()" class="w-full py-2.5 bg-cyan-500/20 text-cyan-300 font-bold rounded-xl border border-cyan-500/40 hover:bg-cyan-500/30 transition-all">
+                    Copy HTML Code to Clipboard
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 hidden px-5 py-3 rounded-2xl glass-card bg-navy-900 border border-cyan-500/40 text-cyan-300 font-semibold text-xs shadow-2xl transition-all duration-300">
+        Notification
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        /* Interactive Synapse Particle Background Canvas */
+        (function initSynapseCanvas() {
+            const canvas = document.getElementById('synapseCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let nodes = [];
+            let mouse = { x: null, y: null, radius: 150 };
+
+            function resize() {
+                width = canvas.width = canvas.parentElement.offsetWidth;
+                height = canvas.height = canvas.parentElement.offsetHeight;
+                createNodes();
+            }
+
+            function createNodes() {
+                nodes = [];
+                const count = Math.floor((width * height) / 14000);
+                for (let i = 0; i < count; i++) {
+                    nodes.push({
+                        x: Math.random() * width,
+                        y: Math.random() * height,
+                        vx: (Math.random() - 0.5) * 0.8,
+                        vy: (Math.random() - 0.5) * 0.8,
+                        radius: Math.random() * 2 + 1.5,
+                        pulse: Math.random() * Math.PI
+                    });
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                
+                // Update and draw nodes
+                for (let i = 0; i < nodes.length; i++) {
+                    let node = nodes[i];
+                    node.x += node.vx;
+                    node.y += node.vy;
+
+                    // Bounce edges
+                    if (node.x < 0 || node.x > width) node.vx *= -1;
+                    if (node.y < 0 || node.y > height) node.vy *= -1;
+
+                    // Mouse reaction
+                    if (mouse.x !== null) {
+                        let dx = mouse.x - node.x;
+                        let dy = mouse.y - node.y;
+                        let dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < mouse.radius) {
+                            let force = (mouse.radius - dist) / mouse.radius;
+                            node.x -= (dx / dist) * force * 2;
+                            node.y -= (dy / dist) * force * 2;
+                        }
+                    }
+
+                    // Node pulsing
+                    node.pulse += 0.03;
+                    let opacity = 0.4 + Math.sin(node.pulse) * 0.3;
+
+                    ctx.beginPath();
+                    ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(56, 189, 248, ${opacity})`;
+                    ctx.fill();
+
+                    // Connect edges
+                    for (let j = i + 1; j < nodes.length; j++) {
+                        let nodeB = nodes[j];
+                        let dx = node.x - nodeB.x;
+                        let dy = node.y - nodeB.y;
+                        let dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < 110) {
+                            let lineAlpha = (1 - dist / 110) * 0.35;
+                            ctx.beginPath();
+                            ctx.moveTo(node.x, node.y);
+                            ctx.lineTo(nodeB.x, nodeB.y);
+                            ctx.strokeStyle = `rgba(168, 85, 247, ${lineAlpha})`;
+                            ctx.lineWidth = 0.8;
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', resize);
+            window.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                mouse.x = e.clientX - rect.left;
+                mouse.y = e.clientY - rect.top;
+            });
+            window.addEventListener('mouseleave', () => {
+                mouse.x = null;
+                mouse.y = null;
+            });
+
+            resize();
+            animate();
+        })();
+
+        /* Mobile Nav Menu Toggle */
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const openIcon = document.getElementById('menuIconOpen');
+            const closeIcon = document.getElementById('menuIconClose');
+            menu.classList.toggle('hidden');
+            openIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+        }
+
+        /* Competition Category Filtering */
+        function filterCompetitions(category) {
+            const cards = document.querySelectorAll('.comp-card');
+            const btns = document.querySelectorAll('.comp-filter-btn');
+
+            btns.forEach(btn => {
+                btn.classList.remove('bg-cyan-500', 'text-navy-950');
+                btn.classList.add('bg-slate-800', 'text-slate-300');
+            });
+
+            event.target.classList.remove('bg-slate-800', 'text-slate-300');
+            event.target.classList.add('bg-cyan-500', 'text-navy-950');
+
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        /* Competition Search Box */
+        function searchCompetitions() {
+            const query = document.getElementById('competitionSearch').value.toLowerCase();
+            const cards = document.querySelectorAll('.comp-card');
+
+            cards.forEach(card => {
+                const title = card.querySelector('h3').innerText.toLowerCase();
+                const desc = card.querySelector('p').innerText.toLowerCase();
+                if (title.includes(query) || desc.includes(query)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        }
+
+        /* Join Modal Controls */
+        function openJoinModal(preselectRole) {
+            const modal = document.getElementById('joinModal');
+            const roleSelect = document.getElementById('modalRoleSelect');
+            if (preselectRole && roleSelect) {
+                roleSelect.value = preselectRole;
+            }
+            modal.classList.remove('hidden');
+        }
+
+        function closeJoinModal() {
+            document.getElementById('joinModal').classList.add('hidden');
+        }
+
+        function handleModalSubmit(e) {
+            e.preventDefault();
+            closeJoinModal();
+            showToast('✓ Registration submitted! Welcome to GW Williams Neuroscience.');
+        }
+
+        /* Contact Form Submission */
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            e.target.reset();
+            showToast('✓ Thank you! Your message has been sent to the club executive team.');
+        }
+
+        /* Deployment Helper Drawer */
+        function toggleDeployDrawer() {
+            const drawer = document.getElementById('deployDrawer');
+            drawer.classList.toggle('translate-x-full');
+        }
+
+        function copyFullHtmlCode() {
+            const fullHtml = document.documentElement.outerHTML;
+            const temp = document.createElement('textarea');
+            temp.value = fullHtml;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand('copy');
+            document.body.removeChild(temp);
+            showToast('✓ Full HTML code copied to clipboard!');
+        }
+
+        /* Toast Popup Utility */
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
